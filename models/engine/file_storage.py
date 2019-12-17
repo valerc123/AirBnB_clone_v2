@@ -20,7 +20,6 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    @classmethod
     def all(self, cls=None):
         """returns a dictionary
         Return:
