@@ -54,8 +54,7 @@ class HBNBCommand(cmd.Cmd):
 
                 # string value
                 if (value[-1:] and value[:1]) == '"':
-                    value = value.replace("'", "")
-                    value = value.replace(" ", "_")
+                    value = value.replace("_", " ")
                     value = value.replace("\"", "")
                 elif '.' in value:
                     value = float(value)
