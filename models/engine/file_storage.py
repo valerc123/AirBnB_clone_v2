@@ -49,9 +49,7 @@ class FileStorage:
     def delete(self, obj=None):
         """Deletes object
         """
-        for _obj in __objects:
-            if _obj.id == obj.id:
-                del _obj
+        del self.__objects['{}.{}'.format(type(obj).__name__, obj.id)]
         self.save()
 
     def reload(self):
