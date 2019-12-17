@@ -36,13 +36,34 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel, saves it
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object t has the name
         """
         try:
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+
+            parameters = my_list[1:]
+            list_param = []
+            new_list = []
+            for param in parameters:
+                list_param = param.split('=')
+                key = list_param[0]
+                value = list_param[1]
+
+                # string value
+                if (value[-1:] and value[:1]) == '"':
+                    value = value.replace("'", "")
+                    value = value.replace(" ", "_")
+                    value = value.replace("\"", "")
+                elif '.' in value:
+                    value = float(value)
+                else:
+                    value = int(value)
+
+                setattr(obj, key, value)
+
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
