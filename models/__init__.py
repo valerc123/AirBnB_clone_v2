@@ -12,7 +12,7 @@ from models.review import Review
 from models.engine.db_storage import DBStorage
 from models.engine.file_storage import FileStorage
 
-if environ['HBNB_TYPE_STORAGE'] == 'db':
+if environ.get('HBNB_TYPE_STORAGE') == 'db':
     storage = DBStorage()
     storage.reload()
 else:
