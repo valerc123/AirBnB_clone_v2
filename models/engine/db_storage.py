@@ -31,8 +31,7 @@ class DBStorage:
                                               environ.get('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
         if environ.get('HBNB_ENV') == 'test':
-            pass
-            #Base.metadata.drop_all()
+            Base.metadata.drop_all()
 
     def all(self, cls=None):
         """Select all objects of a cls
