@@ -13,9 +13,9 @@ class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
     """
-    id = Column('id', Integer, primary_key=True, nullable=False, unique=True)
-    created_at = Column('created_at', DateTime, default=datetime.utcnow)
-    updated_at = Column('updated_at', DateTime, default=datetime.utcnow)
+    id = Column('id', String(60), primary_key=True, nullable=False, unique=True)
+    created_at = Column('created_at', DateTime, default=datetime.utcnow())
+    updated_at = Column('updated_at', DateTime, default=datetime.utcnow())
 
 
     def __init__(self, *args, **kwargs):
