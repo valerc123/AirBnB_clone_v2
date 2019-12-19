@@ -7,17 +7,20 @@ from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 
-
 Base = declarative_base()
+
 
 class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
     """
-    id = Column('id', String(60), primary_key=True, nullable=False, unique=True)
+    id = Column('id',
+                String(60),
+                primary_key=True,
+                nullable=False,
+                unique=True)
     created_at = Column('created_at', DateTime, default=datetime.utcnow())
     updated_at = Column('updated_at', DateTime, default=datetime.utcnow())
-
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
@@ -45,7 +48,7 @@ class BaseModel:
             Returns a string of class name, id, and dictionary
         """
         return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+            type(self).__name__, self.id, self.to_dict())
 
     def __repr__(self):
         """return a string representaion
@@ -76,4 +79,3 @@ class BaseModel:
     def delete(self):
         # can be object
         models.storage.delete(self.to_dict())
-
