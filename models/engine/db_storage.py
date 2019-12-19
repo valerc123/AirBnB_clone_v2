@@ -2,13 +2,20 @@
 from os import environ
 from sqlalchemy import create_engine
 from sqlalchemy.orm import relationship, sessionmaker, scoped_session
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+
+
+def create_dict(_dict, obj):
+    for o in obj:
+        key = "{}.{}".format(type(o).__name__, o.id)
+        value = o
+        _dict[key] = value
 
 
 class DBStorage:
@@ -23,23 +30,31 @@ class DBStorage:
                                               environ.get('HBNB_MYSQL_HOST'),
                                               environ.get('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
-        if environ['HBNB_ENV'] =='test':
-            Base.metadata.drop_all()
+        if environ.get('HBNB_ENV') == 'test':
+            pass
+            #Base.metadata.drop_all()
 
     def all(self, cls=None):
         """Select all objects of a cls
         """
-        session = self.__session()
+        sess = self.__session
+        _dict = dict()
+        my_list = ['State', 'User', 'City']
+
         if cls is None:
-            session.query(User, State, City, Amenity, Place, Review).all()
+            for cls in my_list:
+                session = sess.query(eval(cls)).all()
+                create_dict(_dict, session)
         else:
-            session.query(cls)
-        return session.__dict
+            session = sess.query(cls).all()
+            create_dict(_dict, session)
+        return _dict
 
     def new(self, obj):
         """Add obj to the database session
         """
         self.__session.add(obj)
+        #print(obj)
 
     def save(self):
         """Commit all changes of the db session
@@ -53,7 +68,7 @@ class DBStorage:
             del obj
 
     def reload(self):
-        """
+        """Update obj
         """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
