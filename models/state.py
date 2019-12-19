@@ -5,6 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import environ
 
+
 class State(BaseModel, Base):
     """This is the class for State
     Attributes:
@@ -12,5 +13,4 @@ class State(BaseModel, Base):
     """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    cities = relationship('City', cascade="delete", backref="State")
-    
+    cities = relationship('City', cascade="all, delete", backref="state_t")
