@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from os import environ
 from sqlalchemy import create_engine
-from sqlalchemy.orm import relationship, sessionmaker, scopedsession
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -18,10 +18,10 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}"
-                                      .format(environ['HBNB_MYSQL_USER'],
-                                              environ['HBNB_MYSQL_PWD'],
-                                              environ['HBNB_MYSQL_HOST']
-                                              environ['HBNB_MYSQL_DB']),
+                                      .format(environ.get('HBNB_MYSQL_USER'),
+                                              environ.get('HBNB_MYSQL_PWD'),
+                                              environ.get('HBNB_MYSQL_HOST'),
+                                              environ.get('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
         if environ['HBNB_ENV'] =='test':
             Base.metadata.drop_all()
@@ -49,7 +49,7 @@ class DBStorage:
     def delete(self, obj=None):
         """Delete obj if not none
         """
-        if obj not None:
+        if obj is not None:
             del obj
 
     def reload(self):
