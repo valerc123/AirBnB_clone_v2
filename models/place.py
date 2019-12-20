@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """This is the place class"""
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """This is the class for Place
     Attributes:
         city_id: city id
@@ -18,6 +20,7 @@ class Place(BaseModel):
         longitude: longitude in float
         amenity_ids: list of Amenity ids
     """
+    __tablename__ = "places"
     city_id = ""
     user_id = ""
     name = ""
@@ -29,3 +32,4 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
+    reviews = relationship('Review', cascade="delete, all", backref="place")
