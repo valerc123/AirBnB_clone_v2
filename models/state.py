@@ -4,6 +4,9 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import environ
+import models
+
+storage_type = environ.get("HBNB_TYPE_STORAGE")
 
 
 class State(BaseModel, Base):
@@ -12,5 +15,18 @@ class State(BaseModel, Base):
         name: input name
     """
     __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-    cities = relationship('City', cascade="all, delete", backref="state_t")
+    if storage_type == 'db':
+        name = Column(String(128), nullable=False)
+        cities = relationship('City', cascade="all, delete", backref="state_t")
+    else:
+        name = ""
+
+    if storage_type != 'db':
+        @property
+        def cities(self):
+            list_cities = []
+            all_cities = model.storage.all(City)
+            for key, city_obj in all_cities.items():
+                if city_obj.state_id == self.id:
+                    list_cities.append(city_obj)
+            return list_cities
