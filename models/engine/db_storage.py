@@ -38,7 +38,7 @@ class DBStorage:
         """
         sess = self.__session
         _dict = dict()
-        my_list = ['State', 'User', 'City', 'Place', 'Review']
+        my_list = ['State', 'User', 'City', 'Place', 'Review', 'Amenity']
 
         if cls is None:
             for cls in my_list:
