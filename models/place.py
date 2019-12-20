@@ -10,9 +10,12 @@ storage_type = environ.get('HBNB_TYPE_STORAGE')
 if storage_type == 'db':
     metadata = Base.metadata
     place_amenity = Table('place_amenity', metadata,
-                Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-                Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
-    )
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True, nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -43,8 +46,11 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         amenity_ids = []
-        amenities = relationship('Amenity', cascade="all, delete", backref="place")
-        reviews = relationship('Review', cascade="all, delete", backref="place")
+        amenities = relationship('Amenity', secondary=place_amenity,
+                                 back_populates="place_amenities",
+                                 viewonly=False)
+        reviews = relationship('Review', cascade="all, delete",
+                               backref="place")
     else:
         city_id = ""
         user_id = ""
@@ -57,4 +63,3 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-  

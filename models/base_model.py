@@ -14,13 +14,11 @@ class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
     """
-    id = Column('id',
-                String(60),
-                primary_key=True,
-                nullable=False,
-                unique=True)
-    created_at = Column('created_at', DateTime, default=datetime.utcnow())
-    updated_at = Column('updated_at', DateTime, default=datetime.utcnow())
+    id = Column('id', String(60), primary_key=True, nullable=False)
+    created_at = Column('created_at', DateTime,
+                        default=datetime.utcnow(), nullable=False)
+    updated_at = Column('updated_at', DateTime,
+                        default=datetime.utcnow(), nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
@@ -38,6 +36,8 @@ class BaseModel:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
+                if not kwargs.get('id'):
+                    self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
