@@ -31,15 +31,14 @@ class DBStorage:
                                               environ.get('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
         if environ.get('HBNB_ENV') == 'test':
-            pass
-            #Base.metadata.drop_all()
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Select all objects of a cls
         """
         sess = self.__session
         _dict = dict()
-        my_list = ['State', 'User', 'City']
+        my_list = ['State', 'User', 'City', 'Place']
 
         if cls is None:
             for cls in my_list:
@@ -54,7 +53,6 @@ class DBStorage:
         """Add obj to the database session
         """
         self.__session.add(obj)
-        #print(obj)
 
     def save(self):
         """Commit all changes of the db session
