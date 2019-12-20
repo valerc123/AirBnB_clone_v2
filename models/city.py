@@ -16,4 +16,3 @@ class City(BaseModel, Base):
     name = Column(String(128), nullable=False)
     state = relationship('State', cascade="all, delete", backref="cities")
     places = relationship('Place', cascade='all, delete', backref='cities')
-    
