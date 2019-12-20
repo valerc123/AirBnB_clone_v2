@@ -2,6 +2,9 @@
 """This is the review class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
+from os import environ
+
+storage_type = environ.get('HBNB_TYPE_STORAGE')
 
 
 class Review(BaseModel, Base):
