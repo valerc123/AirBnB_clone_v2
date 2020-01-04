@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Script
 sudo mkdir -p /data/web_static/releases/test/
 sudo mkdir -p /data/web_static/shared/
 sudo touch /data/web_static/releases/test/index.html
