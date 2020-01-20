@@ -10,13 +10,16 @@ app = Flask(__name__)
 def home():
     return 'Hello HBNB!'
 
+
 @app.route('/hbnb', strict_slashes=False)
 def app_1():
     return 'HBNB'
 
+
 @app.route('/c/<text>', strict_slashes=False)
 def app_2(text):
     return "C {}".format(text.replace('_', ' '))
+
 
 @app.route('/python/<text>', strict_slashes=False)
 @app.route('/python', strict_slashes=False, defaults={'text': 'is cool'})

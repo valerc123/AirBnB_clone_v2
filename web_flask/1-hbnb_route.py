@@ -15,9 +15,4 @@ def home():
 def app_1():
     return 'HBNB'
 
-
-@app.route('/c/<text>', strict_slashes=False)
-def app_2(text):
-    return "C {}".format(text.replace('_', ' '))
-
 app.run()
