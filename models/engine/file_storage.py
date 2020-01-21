@@ -25,7 +25,14 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        return self.__objects
+        if cls is None:
+            return self.__objects
+        else:
+            obj_cls = dict()
+            for key, value in self.__objects.items():
+                if cls.__name__ in key:
+                    obj_cls[key] = value
+            return obj_cls
 
     def new(self, obj):
         """sets __object to given obj
@@ -62,3 +69,9 @@ class FileStorage:
                     self.__objects[key] = value
         except FileNotFoundError:
             pass
+
+    def close(self):
+        """
+            Deserializing the JSON file to objects
+        """
+        self.reload()

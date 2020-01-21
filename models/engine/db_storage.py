@@ -12,9 +12,9 @@ from models.review import Review
 
 
 def create_dict(_dict, obj):
-    for o in obj:
-        key = "{}.{}".format(type(o).__name__, o.id)
-        value = o
+    for ob in obj:
+        key = "{}.{}".format(type(ob).__name__, ob.id)
+        value = ob
         _dict[key] = value
 
 
@@ -37,7 +37,7 @@ class DBStorage:
         """Select all objects of a cls
         """
         sess = self.__session
-        _dict = dict()
+        _dict = {}
         my_list = ['State', 'User', 'City', 'Place', 'Review', 'Amenity']
 
         if cls is None:
@@ -45,7 +45,7 @@ class DBStorage:
                 session = sess.query(eval(cls)).all()
                 create_dict(_dict, session)
         else:
-            session = sess.query(cls).all()
+            session = sess.query(eval(cls)).all()
             create_dict(_dict, session)
         return _dict
 
@@ -72,3 +72,8 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         self.__session = scoped_session(session_factory)
+
+    def close(self):
+         """
+         """
+         self.__session.remove()
