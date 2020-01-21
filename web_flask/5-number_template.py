@@ -36,4 +36,5 @@ def num_route(n):
 def num_template(n):
     return render_template('5-number.html', num=n)
 
-app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

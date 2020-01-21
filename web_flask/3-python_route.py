@@ -26,4 +26,5 @@ def app_2(text):
 def app_3(text):
     return "Python {}".format(text.replace('_', ' '))
 
-app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

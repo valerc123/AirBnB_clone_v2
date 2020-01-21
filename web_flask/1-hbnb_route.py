@@ -12,7 +12,8 @@ def home():
 
 
 @app.route('/hbnb', strict_slashes=False)
-def app_1():
+def hbnb():
     return 'HBNB'
 
-app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

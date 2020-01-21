@@ -12,23 +12,24 @@ def home():
 
 
 @app.route('/hbnb', strict_slashes=False)
-def app_1():
+def hbnb():
     return 'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def app_2(text):
+def c(text):
     return "C {}".format(text.replace('_', ' '))
 
 
 @app.route('/python/<text>', strict_slashes=False)
 @app.route('/python', strict_slashes=False, defaults={'text': 'is cool'})
-def app_3(text):
+def py_route(text):
     return "Python {}".format(text.replace('_', ' '))
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def app_4(n):
+def num_route(n):
     return "{} is a number".format(n)
 
-app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

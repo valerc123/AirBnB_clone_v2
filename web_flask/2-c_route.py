@@ -12,12 +12,14 @@ def home():
 
 
 @app.route('/hbnb', strict_slashes=False)
-def app_1():
+def hbnb():
     return 'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def app_2(text):
+def c(text):
     return "C {}".format(text.replace('_', ' '))
 
-app.run()
+
+if __name__ == "__main__":
+    app.run(debug=True)

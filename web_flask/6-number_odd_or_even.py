@@ -45,4 +45,6 @@ def odd_or_even(n):
         odd_even = 'odd'
     return render_template('6-number_odd_or_even.html',
                            odd_or_even=odd_even, num=n)
-app.run()
+
+if __name__ == "__main__":
+    app.run(debug=True)
